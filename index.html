@@ -678,6 +678,14 @@ td:first-child{font-weight:600}
 <symbol id="n-beni" viewBox="0 2.0 158.0 88.0" style="--sw:3.0"><g class="arte"><g transform="translate(-1.0,5) rotate(0.8 25 41)"><path class="s1" d="M5,79 L5,5 Q22,3 35,5 Q43,7 43,21 Q43,36 31,40 Q46,41 46,57 Q47,76 35,78 Q21,81 5,79 M6,41 Q20,40 32,37 Q36,35 35,19 Q34,13 28,13 L11,14 L11,31 M11,52 L11,68 Q22,68 32,66 Q37,64 36,55 Q35,49 30,49 Z"/></g><g transform="translate(46.0,4) rotate(-1.2 25 41)"><path class="s1" d="M42,6 Q25,4 7,7 L6,77 Q25,80 43,75 M8,41 Q23,39 37,41"/></g><g transform="translate(89.0,5) rotate(0.8 25 41)"><path class="s1" d="M6,78 L6,8 Q7,1 12,8 L40,70 Q45,78 45,70 L44,5"/></g><g transform="translate(127.0,4) rotate(0.8 25 41)"><path class="s1" d="M13,5 Q20,2.5 27,5 L27,77 Q20,79.5 13,77 Z"/></g></g></symbol>
 <symbol id="n-pando" viewBox="0 2.0 235.0 87.0" style="--sw:3.0"><g class="arte"><g transform="translate(-2.0,5) rotate(0.8 25 41)"><path class="s1" d="M6,79 L6,5 Q21,3 34,5 Q45,7 45,22 L45,30 Q44,43 33,45 Q20,47 12,45 M13,15 L13,35 Q24,37 32,34 Q36,33 36,23 Q36,15 30,14 Z"/></g><g transform="translate(46.0,4) rotate(-1.2 25 41)"><path class="s1" d="M3,79 L6,15 Q7,3 13,3 L34,3 Q41,3 43,15 L47,79 M8,47 Q25,43 42,47"/></g><g transform="translate(93.0,5) rotate(0.8 25 41)"><path class="s1" d="M6,78 L6,8 Q7,1 12,8 L40,70 Q45,78 45,70 L44,5"/></g><g transform="translate(139.0,4) rotate(0.8 25 41)"><path class="s1" d="M5,5 Q18,3 29,5 Q45,7 45,22 L45,59 Q45,77 29,79 Q18,81 5,79 Z M13,14 L13,69 Q23,70 30,67 Q36,65 36,57 L36,24 Q36,16 29,15 Q21,13 13,14 Z"/></g><g transform="translate(185.0,5) rotate(-1.2 25 41)"><path class="s1" d="M25,4 Q45,5 46,22 L46,61 Q45,78 25,79 Q5,78 5,61 L5,22 Q6,5 25,4 Z M25,14 Q14,14 14,25 L14,58 Q14,69 25,69 Q36,69 37,58 L37,25 Q37,14 25,14 Z"/></g></g></symbol>
 <!-- nombres:fin -->
+<!-- polera:inicio -->
+<symbol id="p-lapaz-poster" viewBox="0 0 400 601.28"><image href="disenos/polera/lapaz-poster.webp" x="0" y="0" width="400" height="601.28"/></symbol>
+<symbol id="p-lapaz-ajayu" viewBox="0 0 400 590.41"><image href="disenos/polera/lapaz-ajayu.webp" x="0" y="0" width="400" height="590.41"/></symbol>
+<symbol id="p-lapaz-saltena" viewBox="0 0 400 485.96"><image href="disenos/polera/lapaz-saltena.webp" x="0" y="0" width="400" height="485.96"/></symbol>
+<symbol id="p-lapaz-mamani" viewBox="0 0 400 504.38"><image href="disenos/polera/lapaz-mamani.webp" x="0" y="0" width="400" height="504.38"/></symbol>
+<symbol id="p-lapaz-kusillo" viewBox="0 0 400 528.25"><image href="disenos/polera/lapaz-kusillo.webp" x="0" y="0" width="400" height="528.25"/></symbol>
+<symbol id="p-oruro-carnaval" viewBox="0 0 400 613.89"><image href="disenos/polera/oruro-carnaval.webp" x="0" y="0" width="400" height="613.89"/></symbol>
+<!-- polera:fin -->
 <!-- BEGIN DISENOS -->
 <symbol id="d-cochabamba" viewBox="0 0 400 400">
 <path class="i1" d="M15 130 55 76 83 99 127 36 164 86 191 62 230 112 273 68 309 108 350 57 390 125Z" />
@@ -1396,6 +1404,7 @@ td:first-child{font-weight:600}
             <legend><span class="step-h"><span class="n">5</span><span class="t">Ubicación</span><span class="v" id="v-ub"></span></span></legend>
             <div class="opts" id="o-ub"></div>
             <p class="hint" id="ub-hint" hidden style="margin-top:10px">La gorra solo se estampa al frente.</p>
+            <div id="pd-box" hidden style="margin-top:14px"><div class="hint" style="margin-bottom:8px">Diseño de la espalda:</div><div class="opts" id="o-pd"></div></div>
             <div id="gl-box" hidden style="margin-top:14px"><div class="hint" style="margin-bottom:8px">Qué lleva la gorra:</div><div class="opts" id="o-gl"></div></div>
           </fieldset>
 <fieldset class="step"><legend><span class="step-h"><span class="n">6</span><span class="t">Tintas</span><span class="v" id="v-tin"></span></span></legend>
@@ -2005,26 +2014,37 @@ td:first-child{font-weight:600}
   /* Prueba: solo se muestran los departamentos que ya tienen su arte de serigrafía. Poner SOLO_CON_ARTE=false para volver a los 9. */
   const SOLO_CON_ARTE=true;
   const hasArte=id=>!!document.getElementById('a-'+id);
-  const DEPS=SOLO_CON_ARTE?DEPS_TODOS.filter(d=>hasArte(d.id)):DEPS_TODOS;
+  /* Poleras: diseños a todo color por departamento (disenos/polera, símbolos p-<id>; ver tools/importar_polera.py). La lista manda el orden. */
+  const PDISENOS={lapaz:[['lapaz-poster','La Paz, Illimani'],['lapaz-ajayu','Ciudad Ajayu'],['lapaz-saltena','Salteña'],['lapaz-mamani','La Mamani'],['lapaz-kusillo','Kusillo']],oruro:[['oruro-carnaval','Carnaval 1956']]};
+  const pdList=id=>(PDISENOS[id]||[]).filter(x=>document.getElementById('p-'+x[0]));
+  const pdOf=(id,pd)=>{const l=pdList(id); return l.length?(l.find(x=>x[0]===pd)||l[0])[0]:null;};
+  const pdName=(id,pd)=>{const k=pdOf(id,pd), x=k&&pdList(id).find(y=>y[0]===k); return x?x[1]:'';};
+  const DEPS=SOLO_CON_ARTE?DEPS_TODOS.filter(d=>hasArte(d.id)||pdList(d.id).length):DEPS_TODOS;
   const depById=id=>DEPS.find(d=>d.id===id);
   /* Arte de serigrafía (disenos/arte): mientras un departamento no lo tenga, se usa el dibujo vectorial. El canguro y la polera llevan el mismo arte en la espalda. */
-  const cardId=id=>(hasArte(id)?'a-':'d-')+id;
+  const cardId=id=>hasArte(id)?'a-'+id:(pdOf(id)?'p-'+pdOf(id):'d-'+id);
   /* La gorra lleva un único diseño «BOLIVIA» para todos los departamentos. */
   const hasNombre=id=>!!document.getElementById('n-'+id);
   /* Pecho y gorra llevan solo el nombre del departamento en letras (n-<id>); la gorra también puede llevar BOLIVIA. */
   const nameId=id=>(hasNombre(id)?'n-':'c-')+id;
   const capId=(id,gl)=>gl==='nombre'&&hasNombre(id)?'n-'+id:(hasArte('bolivia')?'a-bolivia':'c-'+id);
-  const backId=(id,prenda)=>(hasArte(id)?'a-':'d-')+id;
+  const backId=(id,prenda,pd)=>(prenda==='polera'&&pdOf(id,pd))?'p-'+pdOf(id,pd):(hasArte(id)?'a-':'d-')+id;
   /* Espalda (canguro y polera): el mismo arte, todos con el mismo ANCHO de impresión; los verticales (3:4) quedan más altos, sin deformarse.
      w = ancho del dibujo y top = borde superior, en unidades del dibujo de la prenda. El canguro arranca bajo la punta de la capucha. */
-  const BACK_ARTE={canguro:{w:144,top:150},polera:{w:134,top:80}};
-  function backBox(id,prenda){
-    const p=PRENDAS[prenda].backp, c=BACK_ARTE[prenda], im=hasArte(id)&&document.querySelector('#am-'+id+' image');
+  const BACK_ARTE={canguro:{w:144,top:150},polera:{w:148,top:80}};
+  const BACK_ALTO_MAX=205;   // las láminas a color son verticales: si quedan muy altas, se achican para no pasar el largo de la espalda
+  function backBox(id,prenda,pd){
+    const p=PRENDAS[prenda].backp, c=BACK_ARTE[prenda];
+    if(prenda==='polera'&&pdOf(id,pd)){
+      const vb=document.getElementById('p-'+pdOf(id,pd)).viewBox.baseVal, r=vb.height/vb.width, w=Math.min(c.w,BACK_ALTO_MAX/r);
+      return {x:200-w/2,y:c.top,w:w,h:w*r};
+    }
+    const im=hasArte(id)&&document.querySelector('#am-'+id+' image');
     if(!im) return p;
     const ix=+im.getAttribute('x'), iy=+im.getAttribute('y'), cw=+im.getAttribute('width'), sc=c.w/cw;   // el símbolo mide 400 × 400
     return {x:200-(ix+cw/2)*sc,y:c.top-iy*sc,w:400*sc,h:400*sc};
   }
-  let S={prenda:'canguro',color:'pacay',talla:'M',dep:'cochabamba',ub:'espalda',tintas:2,acc:'ocre',side:'back',gl:'bolivia'};
+  let S={prenda:'canguro',color:'pacay',talla:'M',dep:'cochabamba',ub:'espalda',tintas:2,acc:'ocre',side:'back',gl:'bolivia',pd:null};
   let saved=store.get('brava-pedido-v2')||{};
   const validItem=it=>it&&PRENDAS[it.prenda]&&PRENDAS[it.prenda].colores.includes(it.color)&&depById(it.dep)&&UB[it.ub]&&ACC[it.acc]&&[1,2].includes(it.tintas)&&PRENDAS[it.prenda].tallas.includes(it.talla)&&Number.isInteger(it.qty)&&it.qty>0;
   let cart=Array.isArray(saved.cart)?saved.cart.filter(validItem):[];
@@ -2054,7 +2074,7 @@ td:first-child{font-weight:600}
   }
   const ink1Name=st=>COL[st.color].dark?'Hueso':'Carbón';
   const tintasTxt=st=>st.tintas===2?`2 (${ink1Name(st)} + ${ACC[st.acc].n})`:`1 (${ink1Name(st)})`;
-  function garmentSVG(st,side){const p=PRENDAS[st.prenda],v=inks(st);side=side||(st.prenda==='gorra'?'front':(st.ub==='pecho'?'front':'back'));let inner='<image href="'+IMG(st.prenda,side,st.color)+'" x="0" y="0" width="400" height="440"/>';if(st.prenda==='gorra')inner+='<use href="#'+capId(st.dep,st.gl)+'" x="'+p.cap.x+'" y="'+p.cap.y+'" width="'+p.cap.w+'" height="'+p.cap.h+'"/>';else if(side==='back'){const bb=backBox(st.dep,st.prenda);inner+='<use href="#'+backId(st.dep,st.prenda)+'" x="'+bb.x+'" y="'+bb.y+'" width="'+bb.w+'" height="'+bb.h+'"/>'}else if(st.ub==='pecho'||st.ub==='ambos')inner+='<use href="#'+nameId(st.dep)+'" x="'+p.chest.x+'" y="'+p.chest.y+'" width="'+p.chest.w+'" height="'+p.chest.h+'"/>';else inner+='<use href="#logo-stamp" x="'+(p.chest.x+2)+'" y="'+(p.chest.y-(Math.round(p.chest.h*1.45)-p.chest.h)/2)+'" width="'+Math.round(p.chest.h*1.45)+'" height="'+Math.round(p.chest.h*1.45)+'"/>';return '<svg viewBox="0 0 400 440" aria-hidden="true" style="'+varStr(v)+'">'+inner+'</svg>';}
+  function garmentSVG(st,side){const p=PRENDAS[st.prenda],v=inks(st);side=side||(st.prenda==='gorra'?'front':(st.ub==='pecho'?'front':'back'));let inner='<image href="'+IMG(st.prenda,side,st.color)+'" x="0" y="0" width="400" height="440"/>';if(st.prenda==='gorra')inner+='<use href="#'+capId(st.dep,st.gl)+'" x="'+p.cap.x+'" y="'+p.cap.y+'" width="'+p.cap.w+'" height="'+p.cap.h+'"/>';else if(side==='back'){const bb=backBox(st.dep,st.prenda,st.pd);inner+='<use href="#'+backId(st.dep,st.prenda,st.pd)+'" x="'+bb.x+'" y="'+bb.y+'" width="'+bb.w+'" height="'+bb.h+'"/>'}else if(st.ub==='pecho'||st.ub==='ambos')inner+='<use href="#'+nameId(st.dep)+'" x="'+p.chest.x+'" y="'+p.chest.y+'" width="'+p.chest.w+'" height="'+p.chest.h+'"/>';else inner+='<use href="#logo-stamp" x="'+(p.chest.x+2)+'" y="'+(p.chest.y-(Math.round(p.chest.h*1.45)-p.chest.h)/2)+'" width="'+Math.round(p.chest.h*1.45)+'" height="'+Math.round(p.chest.h*1.45)+'"/>';return '<svg viewBox="0 0 400 440" aria-hidden="true" style="'+varStr(v)+'">'+inner+'</svg>';}
   const designSVG=(id,v)=>'<svg viewBox="0 0 400 400" aria-hidden="true" style="'+varStr(v)+'"><use href="#'+cardId(id)+'"/></svg>';
   const ico=(n)=>`<svg class="ico" aria-hidden="true"><use href="#i-${n}"/></svg>`;
 
@@ -2123,6 +2143,7 @@ td:first-child{font-weight:600}
     if(clash(S.acc)) S.acc=Object.keys(ACC).find(k=>!clash(k));
     
     if(!['bolivia','nombre'].includes(S.gl)) S.gl='bolivia';
+    S.pd=pdOf(S.dep,S.pd);
     if(!p.back) S.side='front';
   }
   function renderControls(){
@@ -2134,6 +2155,9 @@ td:first-child{font-weight:600}
     $('#o-ub').innerHTML=p.ub.map(u=>radio('ub',u,`<b>${UB[u].n}</b><small>+${BS(UB[u].extra)}, ${UB[u].med}</small>`,'o-ub',S.ub===u)).join('');
     $('#ub-hint').hidden=S.prenda!=='gorra';
     $('#gl-box').hidden=S.prenda!=='gorra';
+    const pds=pdList(S.dep), verPd=S.prenda==='polera'&&pds.length>1&&S.ub!=='pecho';
+    $('#pd-box').hidden=!verPd;
+    $('#o-pd').innerHTML=verPd?pds.map((x,i)=>radio('pd',x[0],`<b>Opción ${i+1}</b><small>${x[1]}</small>`,'o-ub',S.pd===x[0])).join(''):'';
     $('#o-gl').innerHTML=[['bolivia','Opción 1','BOLIVIA'],['nombre','Opción 2',depById(S.dep).n.toUpperCase()]].map(o=>radio('gl',o[0],`<b>${o[1]}</b><small>${o[2]}</small>`,'o-ub',S.gl===o[0],o[0]==='nombre'&&!hasNombre(S.dep))).join('');
     $('#o-tin').innerHTML=[1,2].map(n=>radio('tintas',n,n===1?'1 tinta':`2 tintas <span class="num" style="color:var(--muted);font-size:13px">+${BS(TINTA2)}</span>`,'o-talla',S.tintas===n)).join('');
     $('#o-acc').innerHTML='<span class="hint">Color de acento:</span>'+Object.entries(ACC).map(([k,a])=>{
@@ -2218,8 +2242,8 @@ td:first-child{font-weight:600}
     } else {
       gb.style.display='';
       gb.style.visibility=(S.ub==='espalda'||S.ub==='ambos')?'visible':'hidden';
-      const b=backBox(d.id,S.prenda);
-      setUse($('#pb-design'),backId(d.id,S.prenda),b.x,b.y,b.w,b.h);
+      const b=backBox(d.id,S.prenda,S.pd);
+      setUse($('#pb-design'),backId(d.id,S.prenda,S.pd),b.x,b.y,b.w,b.h);
       if(anim&&anim.p){ replay(gb,'pr-in'); if(gb.style.visibility==='visible') frameBox(b); else anim={...anim,f:0}; }
     }
     if(anim&&anim.g) replay($('#g-shape'),'g-in');
@@ -2261,7 +2285,7 @@ td:first-child{font-weight:600}
     $('#mbar-total').textContent=BS(total);
   }
   function renderAll(anim){ normalize(); renderControls(); renderStage(anim); renderTicket(); }
-  const ANIM={prenda:{g:1,p:1},color:{g:1},dep:{p:1},ub:{p:1},tintas:{p:1},acc:{p:1},gl:{p:1}};
+  const ANIM={prenda:{g:1,p:1},color:{g:1},dep:{p:1},ub:{p:1},tintas:{p:1},acc:{p:1},gl:{p:1},pd:{p:1}};
 
   $('#cz').addEventListener('change',e=>{
     const t=e.target, prevUb=S.ub;
@@ -2271,6 +2295,7 @@ td:first-child{font-weight:600}
     else if(t.name==='dep') S.dep=t.value;
     else if(t.name==='ub') S.ub=t.value;
     else if(t.name==='gl') S.gl=t.value;
+    else if(t.name==='pd') S.pd=t.value;
     else if(t.name==='tintas') S.tintas=Number(t.value);
     else if(t.name==='acc') S.acc=t.value;
     normalize();
@@ -2288,8 +2313,8 @@ td:first-child{font-weight:600}
   $$('[data-view-side]').forEach(b=>b.addEventListener('click',()=>{ S.side=b.dataset.viewSide; renderStage({p:1,g:1}); }));
 
   function addCurrent(){
-    const same=cart.find(it=>['prenda','color','talla','dep','ub','tintas','acc'].every(k=>it[k]===S[k])&&(S.prenda!=='gorra'||(it.gl||'bolivia')===S.gl));
-    if(same) same.qty++; else cart.push({prenda:S.prenda,color:S.color,talla:S.talla,dep:S.dep,ub:S.ub,tintas:S.tintas,acc:S.acc,gl:S.gl,qty:1});
+    const same=cart.find(it=>['prenda','color','talla','dep','ub','tintas','acc'].every(k=>it[k]===S[k])&&(S.prenda!=='gorra'||(it.gl||'bolivia')===S.gl)&&(S.prenda!=='polera'||pdOf(it.dep,it.pd)===pdOf(S.dep,S.pd)));
+    if(same) same.qty++; else cart.push({prenda:S.prenda,color:S.color,talla:S.talla,dep:S.dep,ub:S.ub,tintas:S.tintas,acc:S.acc,gl:S.gl,pd:S.pd,qty:1});
     P.pagado=false; persist(); renderCart();
     const n=cart.reduce((a,i)=>a+i.qty,0);
     toast(`Agregado. Llevás ${n} ${n===1?'prenda':'prendas'}.`);
@@ -2317,10 +2342,10 @@ td:first-child{font-weight:600}
     return `BR-${dd}-${r}`;
   }
   function itemLine(it){ return `${PRENDAS[it.prenda].n} ${COL[it.color].n.toLowerCase()}, talla ${it.talla}`; }
-  function itemDetail(it){return `Departamento: ${depById(it.dep).n}${it.prenda==='gorra'?', texto '+(it.gl==='nombre'?depById(it.dep).n.toUpperCase():'BOLIVIA'):''}, ${UB[it.ub].n.toLowerCase()}, ${it.tintas===1?'1 tinta':'2 tintas'}`;}
+  function itemDetail(it){return `Departamento: ${depById(it.dep).n}${it.prenda==='gorra'?', texto '+(it.gl==='nombre'?depById(it.dep).n.toUpperCase():'BOLIVIA'):''}${it.prenda==='polera'&&pdOf(it.dep,it.pd)?', diseño «'+pdName(it.dep,it.pd)+'»':''}, ${UB[it.ub].n.toLowerCase()}, ${it.tintas===1?'1 tinta':'2 tintas'}`;}
   function buildMessage(){
     const lines=cart.map((it,k)=>{
-      const d=depById(it.dep), badge=it.prenda==='gorra'?`Texto «${it.gl==='nombre'?d.n.toUpperCase():'BOLIVIA'}»`:it.ub==='pecho'?`Nombre «${d.n.toUpperCase()}»`:'Cuadrado de dibujos';
+      const d=depById(it.dep), badge=it.prenda==='gorra'?`Texto «${it.gl==='nombre'?d.n.toUpperCase():'BOLIVIA'}»`:it.ub==='pecho'?`Nombre «${d.n.toUpperCase()}»`:(it.prenda==='polera'&&pdOf(it.dep,it.pd)?`Lámina «${pdName(it.dep,it.pd)}»`:'Cuadrado de dibujos');
       let s=`${k+1}) ${PRENDAS[it.prenda].n} · ${COL[it.color].n} · Talla ${it.talla}\n   Departamento: ${d.n}\n   Diseño: ${badge}\n   Ubicación: ${UB[it.ub].n} (${UB[it.ub].med})${UB[it.ub].logo?' + logo chico en pecho':''}`;
       s+=`\n   Tintas: ${tintasTxt(it)}\n   Cantidad: ${it.qty} × ${BS(unitPrice(it))} = ${BS(unitPrice(it)*it.qty)}`;
       return s;

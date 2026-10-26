@@ -25,7 +25,8 @@ y abrir http://localhost:5191/index.html
 - **Canguro, espalda:** lleva el arte de Matías en Cochabamba, Santa Cruz, Chuquisaca, Tarija y Beni. Faltan La Paz, Oruro, Potosí y Pando (hoy se ocultan con `SOLO_CON_ARTE=true` en `index.html`; ponerlo en `false` los vuelve a mostrar con el dibujo vectorial anterior).
 - **Pecho (canguro y polera):** lleva solo el nombre del departamento en letras.
 - **Gorra:** dos opciones, «BOLIVIA» o el nombre del departamento; el rótulo va centrado en el frente.
-- **Polera, espalda:** lleva el mismo arte que el canguro (`backBox` en `index.html`); cuando lleguen sus diseños propios se cambia ahí.
+- **Polera, espalda:** La Paz (5 opciones: póster Illimani, Ciudad Ajayu, Salteña, La Mamani, Kusillo) y Oruro (Carnaval 1956) llevan láminas a todo color, tal cual, en `disenos/polera/` (`tools/importar_polera.py`, selector «Diseño de la espalda»). Los demás departamentos llevan el mismo arte que el canguro. `disenos/polera/originales/bolivia-cholita.jpg` está guardada pero sin usar.
+- **Derechos:** esas láminas son obras de terceros (póster de Redbubble, libro «La Mamani» de Nelson y Pelon, sello de Correos de Bolivia, afiche Carnaval 1956, «Arte Sano Mutante»). Solo vista previa: no publicar ni vender sin permiso. Aviso: están en el repositorio público solo para la maqueta.
 - **Tamaño de impresión:** todos los dibujos tienen el mismo ancho en la espalda (canguro 144 u., polera 134 u.); los verticales (3:4) quedan más altos, sin deformarse. El canguro arranca bajo la punta de la capucha.
 
 ## Pendientes y avisos
