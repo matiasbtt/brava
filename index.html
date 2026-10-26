@@ -2007,14 +2007,23 @@ td:first-child{font-weight:600}
   const hasArte=id=>!!document.getElementById('a-'+id);
   const DEPS=SOLO_CON_ARTE?DEPS_TODOS.filter(d=>hasArte(d.id)):DEPS_TODOS;
   const depById=id=>DEPS.find(d=>d.id===id);
-  /* Arte de serigrafía (disenos/arte): mientras un departamento no lo tenga, se usa el dibujo vectorial. Solo el canguro lo lleva en la espalda; la polera conserva el vectorial hasta tener su diseño. */
+  /* Arte de serigrafía (disenos/arte): mientras un departamento no lo tenga, se usa el dibujo vectorial. El canguro y la polera llevan el mismo arte en la espalda. */
   const cardId=id=>(hasArte(id)?'a-':'d-')+id;
   /* La gorra lleva un único diseño «BOLIVIA» para todos los departamentos. */
   const hasNombre=id=>!!document.getElementById('n-'+id);
   /* Pecho y gorra llevan solo el nombre del departamento en letras (n-<id>); la gorra también puede llevar BOLIVIA. */
   const nameId=id=>(hasNombre(id)?'n-':'c-')+id;
   const capId=(id,gl)=>gl==='nombre'&&hasNombre(id)?'n-'+id:(hasArte('bolivia')?'a-bolivia':'c-'+id);
-  const backId=(id,prenda)=>(prenda==='canguro'&&hasArte(id)?'a-':'d-')+id;
+  const backId=(id,prenda)=>(hasArte(id)?'a-':'d-')+id;
+  /* Espalda (canguro y polera): el mismo arte, todos con el mismo ANCHO de impresión; los verticales (3:4) quedan más altos, sin deformarse.
+     w = ancho del dibujo y top = borde superior, en unidades del dibujo de la prenda. El canguro arranca bajo la punta de la capucha. */
+  const BACK_ARTE={canguro:{w:144,top:150},polera:{w:134,top:80}};
+  function backBox(id,prenda){
+    const p=PRENDAS[prenda].backp, c=BACK_ARTE[prenda], im=hasArte(id)&&document.querySelector('#am-'+id+' image');
+    if(!im) return p;
+    const ix=+im.getAttribute('x'), iy=+im.getAttribute('y'), cw=+im.getAttribute('width'), sc=c.w/cw;   // el símbolo mide 400 × 400
+    return {x:200-(ix+cw/2)*sc,y:c.top-iy*sc,w:400*sc,h:400*sc};
+  }
   let S={prenda:'canguro',color:'pacay',talla:'M',dep:'cochabamba',ub:'espalda',tintas:2,acc:'ocre',side:'back',gl:'bolivia'};
   let saved=store.get('brava-pedido-v2')||{};
   const validItem=it=>it&&PRENDAS[it.prenda]&&PRENDAS[it.prenda].colores.includes(it.color)&&depById(it.dep)&&UB[it.ub]&&ACC[it.acc]&&[1,2].includes(it.tintas)&&PRENDAS[it.prenda].tallas.includes(it.talla)&&Number.isInteger(it.qty)&&it.qty>0;
@@ -2045,7 +2054,7 @@ td:first-child{font-weight:600}
   }
   const ink1Name=st=>COL[st.color].dark?'Hueso':'Carbón';
   const tintasTxt=st=>st.tintas===2?`2 (${ink1Name(st)} + ${ACC[st.acc].n})`:`1 (${ink1Name(st)})`;
-  function garmentSVG(st,side){const p=PRENDAS[st.prenda],v=inks(st);side=side||(st.prenda==='gorra'?'front':(st.ub==='pecho'?'front':'back'));let inner='<image href="'+IMG(st.prenda,side,st.color)+'" x="0" y="0" width="400" height="440"/>';if(st.prenda==='gorra')inner+='<use href="#'+capId(st.dep,st.gl)+'" x="'+p.cap.x+'" y="'+p.cap.y+'" width="'+p.cap.w+'" height="'+p.cap.h+'"/>';else if(side==='back')inner+='<use href="#'+backId(st.dep,st.prenda)+'" x="'+p.backp.x+'" y="'+p.backp.y+'" width="'+p.backp.w+'" height="'+p.backp.h+'"/>';else if(st.ub==='pecho'||st.ub==='ambos')inner+='<use href="#'+nameId(st.dep)+'" x="'+p.chest.x+'" y="'+p.chest.y+'" width="'+p.chest.w+'" height="'+p.chest.h+'"/>';else inner+='<use href="#logo-stamp" x="'+(p.chest.x+2)+'" y="'+(p.chest.y-(Math.round(p.chest.h*1.45)-p.chest.h)/2)+'" width="'+Math.round(p.chest.h*1.45)+'" height="'+Math.round(p.chest.h*1.45)+'"/>';return '<svg viewBox="0 0 400 440" aria-hidden="true" style="'+varStr(v)+'">'+inner+'</svg>';}
+  function garmentSVG(st,side){const p=PRENDAS[st.prenda],v=inks(st);side=side||(st.prenda==='gorra'?'front':(st.ub==='pecho'?'front':'back'));let inner='<image href="'+IMG(st.prenda,side,st.color)+'" x="0" y="0" width="400" height="440"/>';if(st.prenda==='gorra')inner+='<use href="#'+capId(st.dep,st.gl)+'" x="'+p.cap.x+'" y="'+p.cap.y+'" width="'+p.cap.w+'" height="'+p.cap.h+'"/>';else if(side==='back'){const bb=backBox(st.dep,st.prenda);inner+='<use href="#'+backId(st.dep,st.prenda)+'" x="'+bb.x+'" y="'+bb.y+'" width="'+bb.w+'" height="'+bb.h+'"/>'}else if(st.ub==='pecho'||st.ub==='ambos')inner+='<use href="#'+nameId(st.dep)+'" x="'+p.chest.x+'" y="'+p.chest.y+'" width="'+p.chest.w+'" height="'+p.chest.h+'"/>';else inner+='<use href="#logo-stamp" x="'+(p.chest.x+2)+'" y="'+(p.chest.y-(Math.round(p.chest.h*1.45)-p.chest.h)/2)+'" width="'+Math.round(p.chest.h*1.45)+'" height="'+Math.round(p.chest.h*1.45)+'"/>';return '<svg viewBox="0 0 400 440" aria-hidden="true" style="'+varStr(v)+'">'+inner+'</svg>';}
   const designSVG=(id,v)=>'<svg viewBox="0 0 400 400" aria-hidden="true" style="'+varStr(v)+'"><use href="#'+cardId(id)+'"/></svg>';
   const ico=(n)=>`<svg class="ico" aria-hidden="true"><use href="#i-${n}"/></svg>`;
 
@@ -2209,7 +2218,7 @@ td:first-child{font-weight:600}
     } else {
       gb.style.display='';
       gb.style.visibility=(S.ub==='espalda'||S.ub==='ambos')?'visible':'hidden';
-      const b=p.backp;
+      const b=backBox(d.id,S.prenda);
       setUse($('#pb-design'),backId(d.id,S.prenda),b.x,b.y,b.w,b.h);
       if(anim&&anim.p){ replay(gb,'pr-in'); if(gb.style.visibility==='visible') frameBox(b); else anim={...anim,f:0}; }
     }
