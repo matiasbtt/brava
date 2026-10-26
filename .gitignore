@@ -1,0 +1,6 @@
+prendas3d/respaldo/
+disenos/_pruebas/
+prendas3d/fotos/raw-*
+*.log
+_t.html
+__pycache__/
