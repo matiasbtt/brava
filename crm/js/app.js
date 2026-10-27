@@ -52,3 +52,6 @@
 
 /* Abrir una sección desde el enlace: index.html#estadisticas */
 (()=>{const b=document.querySelector(`[data-view="${location.hash.slice(1)||new URLSearchParams(location.search).get("v")}"]`);if(b)b.click();})();
+
+/* Fecha del encabezado: en la simulación es su «hoy» fijo; en vivo, la fecha real de Cochabamba */
+(()=>{const el=document.querySelector('.today');if(!el)return;const d=window.BRAVA_DATA_MODE==='live'?new Date():new Date(((window.BRAVA_SIM||{}).meta||{}).hoy+'T12:00:00');if(isNaN(d))return;el.firstChild.textContent=d.toLocaleDateString('es-BO',{day:'numeric',month:'short',year:'numeric',timeZone:'America/La_Paz'}).replace('.','').toUpperCase()+' ';})();
