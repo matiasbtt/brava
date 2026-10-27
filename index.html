@@ -1,4 +1,4 @@
-﻿<meta charset="utf-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>BRAVA Maqueta Web</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -1992,6 +1992,7 @@ td:first-child{font-weight:600}
 
 <button class="fab" type="button" id="fab" data-open-cart hidden>Pedido <span class="num" id="fab-n">0</span> <span class="num" id="fab-t">Bs 0</span></button>
 
+<script src="brava-config.js?v=20261027"></script><script src="registro.js?v=20261027"></script>
 <script>
 (function(){
   const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -2567,6 +2568,9 @@ td:first-child{font-weight:600}
     if(e.target.closest('[data-copy-msg]')){ copyText($('#wa-msg').textContent,()=>toast('Mensaje copiado'),$('#wa-msg')); return; }
     if(e.target.closest('#save-qr')){ saveQR(); return; }
     if(e.target.closest('#send-wa')){
+      const params=new URLSearchParams(location.search),src=[params.get('utm_source'),document.referrer].filter(Boolean).join(' ').toLowerCase();
+      const canal=src.includes('instagram')?'Instagram':src.includes('tiktok')?'TikTok':src.includes('whatsapp')?'WhatsApp referido':'Web directa';
+      if(typeof window.registrarPedido==='function') window.registrarPedido({codigo:P.code,nombre:P.nombre,telefono:String(P.cel||'').replace(/^\+?591\s*/, '').replace(/\D/g,''),entrega:P.entrega,zona:P.zona,referencia:P.ref,pagado:!!P.pagado,canal,items:cart.map(it=>({prenda:it.prenda,color:it.color,talla:it.talla==='Única'?'U':it.talla,diseno:it.prenda==='gorra'?gorraTxt(it):it.prenda==='polera'?(it.ub==='pecho'?'BRAVA':pdSel(it.pd).n):depById(it.dep).n,departamento:it.prenda==='canguro'?it.dep:null,ubicacion:it.ub,tintas:it.tintas,cantidad:it.qty}))});
       lastOrder={code:P.code,msg:buildMessage(),total:total(),n:count()};
       cart=[]; P={step:1,nombre:P.nombre,cel:P.cel,entrega:P.entrega,zona:P.zona,ref:P.ref,pagado:false,code:null};
       persist(); renderCart(); go('enviado');
