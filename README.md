@@ -17,15 +17,19 @@ y abrir http://localhost:5191/index.html
 - `disenos/arte/`: dibujos de serigrafía que manda Matías, uno por departamento (`<id>.webp` para imprimir, `<id>-m.webp` para pantalla) más `bolivia` (rótulo de la gorra). Originales en `disenos/arte/originales/`.
 - `disenos/nombres/`: rótulo con el nombre de cada departamento, dibujado por Codex (`v1/` es su entrega original; los de la carpeta raíz están re-espaciados con `tools/reespaciar_nombres.py`).
 - `disenos/*.svg`: dibujos vectoriales anteriores (de Codex); siguen en uso para la polera.
+- `tools/mapas_sombra.py`: saca de las fotos en blanco los mapas de sombra (`prendas/sombra-*.webp`) e inyecta los filtros `#tela-<prenda>-<vista>` que funden el estampado con la tela (sombra de pliegues, poros, manchas de lavado y borde suelto).
 - `tools/`: `importar_arte.py` (foto de línea → arte con transparencia + símbolo en el HTML), `inyectar_nombres.py`, `reespaciar_nombres.py`, `colorear_prendas.py`.
 - `prendas3d/`: pruebas de generación de las prendas (fotos recortadas, especificaciones).
 
 ## Estado (2026-10-26)
 
 - **Canguro, espalda:** lleva el arte de Matías en Cochabamba, Santa Cruz, Chuquisaca, Tarija y Beni. Faltan La Paz, Oruro, Potosí y Pando (hoy se ocultan con `SOLO_CON_ARTE=true` en `index.html`; ponerlo en `false` los vuelve a mostrar con el dibujo vectorial anterior).
-- **Pecho (canguro y polera):** lleva solo el nombre del departamento en letras.
-- **Gorra:** dos opciones, «BOLIVIA» o el nombre del departamento; el rótulo va centrado en el frente.
-- **Polera, espalda:** La Paz (5 opciones: póster Illimani, Ciudad Ajayu, Salteña, La Mamani, Kusillo) y Oruro (Carnaval 1956) llevan láminas a todo color, tal cual, en `disenos/polera/` (`tools/importar_polera.py`, selector «Diseño de la espalda»). Los demás departamentos llevan el mismo arte que el canguro. `disenos/polera/originales/bolivia-cholita.jpg` está guardada pero sin usar.
+- **Colores a la venta:** blanco, negro, azul marino y verde pacay (`COLORES_PRENDA` en `index.html`; las fotos de los otros cuatro siguen en `prendas/`).
+- **Cada prenda tiene su propio catálogo de diseños** (paso 4 del personalizador): el canguro usa los departamentos con arte; la polera, sus láminas a color (página **Poleras**); la gorra, tres diseños: BOLIVIA, BRAVA o el nombre de un departamento.
+- **Canguro, espalda:** el arte de Matías en Cochabamba, Santa Cruz, Chuquisaca, Tarija y Beni. Faltan La Paz, Oruro, Potosí y Pando (se ocultan con `SOLO_CON_ARTE=true`).
+- **Pecho:** el canguro lleva el nombre del departamento; **todas las poleras llevan «BRAVA» al frente** (`n-brava`, de `disenos/nombres/v1/brava.svg`). Opciones de la polera: «Pecho» (solo BRAVA) o «Espalda» (lámina + BRAVA al frente).
+- **Polera, espalda:** La Paz (5 láminas) y Oruro (Carnaval 1956) a todo color, tal cual, en `disenos/polera/` (`tools/importar_polera.py`). `disenos/polera/originales/bolivia-cholita.jpg` está guardada sin usar.
+- **QR:** el botón «Ver el QR de ejemplo» (Cómo comprar y pedido vacío) abre el paso de pago sin armar un pedido; si el pedido está vacío carga un canguro de ejemplo.
 - **Derechos:** esas láminas son obras de terceros (póster de Redbubble, libro «La Mamani» de Nelson y Pelon, sello de Correos de Bolivia, afiche Carnaval 1956, «Arte Sano Mutante»). Solo vista previa: no publicar ni vender sin permiso. Aviso: están en el repositorio público solo para la maqueta.
 - **Tamaño de impresión:** todos los dibujos tienen el mismo ancho en la espalda (canguro 144 u., polera 134 u.); los verticales (3:4) quedan más altos, sin deformarse. El canguro arranca bajo la punta de la capucha.
 

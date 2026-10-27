@@ -8,7 +8,7 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 HTML = RAIZ / 'index.html'
-IDS = ['cochabamba', 'lapaz', 'santacruz', 'oruro', 'potosi', 'chuquisaca', 'tarija', 'beni', 'pando']
+IDS = ['brava', 'cochabamba', 'lapaz', 'santacruz', 'oruro', 'potosi', 'chuquisaca', 'tarija', 'beni', 'pando']
 
 
 def simbolo(id_: str) -> str:
