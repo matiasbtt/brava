@@ -36,7 +36,7 @@ def filtros() -> str:
         f.append(
             f'<filter id="tela-{v}" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="440" color-interpolation-filters="sRGB">'
             '<feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="4" result="rugoso"/>'
-            '<feDisplacementMap in="SourceGraphic" in2="rugoso" scale="1" xChannelSelector="R" yChannelSelector="G" result="borde"/>'
+            '<feDisplacementMap in="SourceGraphic" in2="rugoso" scale="0.4" xChannelSelector="R" yChannelSelector="G" result="borde"/>'
             '<feGaussianBlur in="borde" stdDeviation="0.28" result="suave"/>'
             f'<feImage href="prendas/sombra-{v}.webp" x="0" y="0" width="400" height="440" preserveAspectRatio="none" result="sombra"/>'
             '<feBlend in="suave" in2="sombra" mode="multiply" result="pliegue"/>'

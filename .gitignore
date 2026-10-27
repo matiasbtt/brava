@@ -4,3 +4,4 @@ prendas3d/fotos/raw-*
 *.log
 _t.html
 __pycache__/
+disenos/arte/originales/*.png

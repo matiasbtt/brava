@@ -6,7 +6,9 @@ Ej.:  python tools/importar_arte.py beni C:/ruta/beni.webp
 Qué hace (no retoca el dibujo, solo le quita el papel):
   1. guarda el original en disenos/arte/originales/<id>.<ext>
   2. escribe disenos/arte/<id>.webp: RGB blanco y alfa = oscuridad del trazo
-     (la página lo usa como máscara y lo pinta con la tinta de la prenda)
+     (la página lo usa como máscara y lo pinta con la tinta de la prenda).
+     Si el archivo ya es un PNG con transparencia (tinta oscura sobre fondo transparente) se usa su alfa tal cual y se
+     recorta al trazo; así entran los PNG de 3780 px del Drive sin perder calidad.
   3. reinyecta en index.html el símbolo <symbol id="a-<id>"> de todos los artes
 """
 import re
@@ -25,10 +27,35 @@ IDS = ['cochabamba', 'lapaz', 'santacruz', 'oruro', 'potosi', 'chuquisaca', 'tar
 NEGRO, PAPEL = 70, 205
 # Artes de gorra (un solo diseño para todos los departamentos): se recortan al trazo.
 GORRA = ['bolivia']
-ANCHO_MAX = 1100
+ANCHO_MAX = 2000   # archivo de impresión; la versión de pantalla (-m) se saca de este
+
+
+def a_alfa_png(origen: Path, destino: Path) -> tuple[int, int]:
+    """PNG con transparencia real: alfa × oscuridad (lo opaco y claro, p. ej. un relleno blanco, no es tinta)."""
+    Image.MAX_IMAGE_PIXELS = None
+    rgba = np.asarray(Image.open(origen).convert('RGBA'), dtype=np.float32)
+    lum = rgba[..., :3].mean(axis=2)
+    a = rgba[..., 3] / 255 * np.clip((PAPEL - lum) / (PAPEL - NEGRO), 0, 1)
+    ys, xs = np.where(a > 0.08)
+    m = round(0.004 * (xs.max() - xs.min()))   # recorte al trazo: así todos los departamentos imprimen al mismo ancho
+    a = a[max(ys.min() - m, 0):ys.max() + m + 1, max(xs.min() - m, 0):xs.max() + m + 1]
+    img = Image.fromarray((a * 255 + 0.5).astype(np.uint8), 'L')
+    if img.width > ANCHO_MAX:
+        img = img.resize((ANCHO_MAX, round(img.height * ANCHO_MAX / img.width)), Image.LANCZOS)
+    rgba_out = np.zeros((img.height, img.width, 4), dtype=np.uint8)
+    rgba_out[..., :3] = 255
+    rgba_out[..., 3] = np.asarray(img)
+    Image.fromarray(rgba_out, 'RGBA').save(destino, 'WEBP', lossless=True, method=6)
+    return img.size
 
 
 def a_alfa(origen: Path, destino: Path) -> tuple[int, int]:
+    probe = Image.open(origen)
+    if probe.mode in ('RGBA', 'LA') or 'transparency' in probe.info:
+        Image.MAX_IMAGE_PIXELS = None
+        al = np.asarray(probe.convert('RGBA').getchannel('A'))
+        if (al < 250).mean() > 0.05 and destino.stem not in GORRA:
+            return a_alfa_png(origen, destino)
     rgb = Image.open(origen).convert('RGB')
     if rgb.width > ANCHO_MAX:
         rgb = rgb.resize((ANCHO_MAX, round(rgb.height * ANCHO_MAX / rgb.width)), Image.LANCZOS)
@@ -57,10 +84,10 @@ def a_alfa(origen: Path, destino: Path) -> tuple[int, int]:
 
 
 def version_pantalla(id_: str) -> None:
-    """<id>-m.webp: lado mayor de 560 px, reducida con filtro de calidad (el navegador reduce mal los trazos finos
+    """<id>-m.webp: lado mayor de 720 px, reducida con filtro de calidad (el navegador reduce mal los trazos finos
     cuando la imagen es 4x más grande que el espacio donde se dibuja). El archivo grande queda para imprimir."""
     im = Image.open(ARTE / f'{id_}.webp')
-    k = 560 / max(im.size)
+    k = 720 / max(im.size)
     if k < 1:
         im = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
     im.save(ARTE / f'{id_}-m.webp', 'WEBP', lossless=True, method=6)
