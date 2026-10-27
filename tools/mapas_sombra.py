@@ -42,12 +42,12 @@ def filtros() -> str:
             '<feBlend in="suave" in2="sombra" mode="multiply" result="pliegue"/>'
             '<feComposite in="pliegue" in2="suave" operator="in" result="sobre"/>'
             '<feTurbulence type="fractalNoise" baseFrequency="1.8" numOctaves="1" seed="7" result="trama"/>'
-            '<feColorMatrix in="trama" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  6 0 0 0 -1.05" result="poros"/>'
+            '<feColorMatrix in="trama" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0 1" result="poros"/>'
             '<feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="3" seed="21" result="lavado"/>'
-            '<feColorMatrix in="lavado" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.9 0 0 0 0.52" result="manchas"/>'
+            '<feColorMatrix in="lavado" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.2 0 0 0 0.88" result="manchas"/>'
             '<feComposite in="poros" in2="manchas" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" result="cobertura"/>'
             '<feComposite in="sobre" in2="cobertura" operator="in" result="tinta"/>'
-            '<feComponentTransfer in="tinta"><feFuncA type="linear" slope="0.94"/></feComponentTransfer>'
+            '<feComponentTransfer in="tinta"><feFuncA type="linear" slope="1"/></feComponentTransfer>'
             '</filter>')
     return '<!-- tela:inicio --><defs>' + ''.join(f) + '</defs><!-- tela:fin -->' + chr(10)
 

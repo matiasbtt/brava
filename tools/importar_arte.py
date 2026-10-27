@@ -90,11 +90,31 @@ def version_pantalla(id_: str) -> None:
     k = 720 / max(im.size)
     if k < 1:
         im = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
+    # «Negrito»: en la prenda el dibujo se ve a ~125 px de ancho y el trazo fino se pierde; se engruesa un poco
+    # (y se afirma el borde) solo en la versión de pantalla. El archivo grande de impresión no se toca.
+    from PIL import ImageFilter
+    a = im.getchannel('A')
+    grueso = a.filter(ImageFilter.MaxFilter(3))
+    a = Image.fromarray(np.clip(np.maximum(np.asarray(a, dtype=np.float32), 0.8 * np.asarray(grueso, dtype=np.float32)) * 1.25, 0, 255).astype(np.uint8))
+    im.putalpha(a)
     im.save(ARTE / f'{id_}-m.webp', 'WEBP', lossless=True, method=6)
+
+
+def version_chica(id_: str) -> None:
+    """<id>-s.webp: 96 px, para miniaturas de ~40 px (carrito, fichas). Una máscara de 720 px reducida de golpe a 40 px
+    sale con bloques; así la reducción es chica y el trazo, que a ese tamaño casi desaparece, se refuerza."""
+    im = Image.open(ARTE / f'{id_}.webp')
+    k = 96 / max(im.size)
+    im = im.resize((max(1, round(im.width * k)), max(1, round(im.height * k))), Image.LANCZOS)
+    a = np.clip(np.asarray(im.getchannel('A'), dtype=np.float32) * 1.0, 0, 255).astype(np.uint8)
+    im.putalpha(Image.fromarray(a))
+    im.save(ARTE / f'{id_}-s.webp', 'WEBP', lossless=True, method=6)
 
 
 def simbolo(id_: str) -> str:
     version_pantalla(id_)
+    if id_ not in GORRA:
+        version_chica(id_)
     w, h = Image.open(ARTE / f'{id_}-m.webp').size
     # Cabe en el cuadrado de 400, centrado, sin deformar.
     k = min(400 / w, 400 / h)
@@ -102,12 +122,21 @@ def simbolo(id_: str) -> str:
     x, y = round((400 - sw) / 2, 2), round((400 - sh) / 2, 2)
     if id_ in GORRA:  # el símbolo toma la proporción del recorte
         sw, sh, x, y = 400, round(400 * h / w, 2), 0, 0
-    return (
+    grande = (
         f'<symbol id="a-{id_}" viewBox="0 0 400 {sh if id_ in GORRA else 400}">'
         f'<mask id="am-{id_}" maskUnits="userSpaceOnUse" x="{x}" y="{y}" width="{sw}" height="{sh}">'
         f'<image href="disenos/arte/{id_}-m.webp" x="{x}" y="{y}" width="{sw}" height="{sh}"/></mask>'
         f'<g class="arte"><rect class="i1" x="{x}" y="{y}" width="{sw}" height="{sh}" mask="url(#am-{id_})"/></g></symbol>'
     )
+    if id_ in GORRA:
+        return grande
+    chico = (
+        f'<symbol id="s-{id_}" viewBox="0 0 400 400">'
+        f'<mask id="sm-{id_}" maskUnits="userSpaceOnUse" x="{x}" y="{y}" width="{sw}" height="{sh}">'
+        f'<image href="disenos/arte/{id_}-s.webp" x="{x}" y="{y}" width="{sw}" height="{sh}"/></mask>'
+        f'<g class="arte"><rect class="i1" x="{x}" y="{y}" width="{sw}" height="{sh}" mask="url(#sm-{id_})"/></g></symbol>'
+    )
+    return grande + chr(10) + chico
 
 
 def inyectar() -> None:
