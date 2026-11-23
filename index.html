@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>BRAVA Maqueta Web</title>
+<title>BRAVA | Ropa urbana personalizable</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -113,6 +113,7 @@ symbol[id^="n-"] .s1{stroke-width:var(--sw,3)}
 @media (prefers-reduced-motion:reduce){.cin,.pr-in,.g-in,.tw-go,#pr-frame.go path{animation:none}.btn:hover .ico{transform:none}}
 
 /* ---------- Barra de herramienta ---------- */
+.tool[hidden]{display:none}
 .tool{position:sticky;top:env(safe-area-inset-top,0px);z-index:25;background:var(--band-night);color:var(--bone);border-bottom:1px solid var(--bone-line)}
 .tool .wrap{display:flex;align-items:center;gap:14px;min-height:50px}
 .tool-brand{font-family:var(--stencil);font-size:19px;letter-spacing:.07em;white-space:nowrap}
@@ -213,7 +214,7 @@ symbol[id^="n-"] .s1{stroke-width:var(--sw,3)}
 
 /* Personalizador */
 .cz{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:start;padding-bottom:80px}
-.cz-stage{position:sticky;top:calc(env(safe-area-inset-top,0px) + 64px);background:var(--stage);border-radius:22px;padding:18px 18px 16px}
+.cz-stage{position:sticky;top:calc(env(safe-area-inset-top,0px) + 14px);background:var(--stage);border-radius:22px;padding:18px 18px 16px}
 .stage-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .stage-name{font:900 26px/1 var(--display);font-stretch:62%;text-transform:uppercase}
 .seg{display:inline-flex;background:var(--paper);border-radius:999px;padding:3px;gap:2px}
@@ -288,7 +289,7 @@ select{appearance:none;padding-right:42px;background:var(--card) url("data:image
 .mbar .btn{margin-left:auto}
 @media (max-width:900px){
   .cz{grid-template-columns:1fr;gap:20px;padding-bottom:110px}
-  .cz-stage{top:calc(env(safe-area-inset-top,0px) + 50px);z-index:5;padding:10px 12px;border-radius:0 0 18px 18px;margin-inline:calc(-1 * max(16px, env(safe-area-inset-left,0px)))}
+  .cz-stage{top:calc(env(safe-area-inset-top,0px) + 0px);z-index:5;padding:10px 12px;border-radius:0 0 18px 18px;margin-inline:calc(-1 * max(16px, env(safe-area-inset-left,0px)))}
   #stage{height:30vh;min-height:200px}
   .stage-foot{display:none}
   .stage-name{font-size:20px}
@@ -1311,7 +1312,7 @@ td:first-child{font-weight:600}
 </svg>
 
 <!-- ===== Barra de herramienta ===== -->
-<header class="tool">
+<header class="tool" hidden>
   <div class="wrap">
     <div class="tool-brand">BRAVA<span>Prototipo web</span></div>
     <div class="tabs" role="tablist" aria-label="Vista">
@@ -1438,12 +1439,12 @@ td:first-child{font-weight:600}
               <dt>Medida</dt><dd class="num" id="tk-med"></dd>
               <dt>Tintas</dt><dd id="tk-tin"></dd>
               <dt>Técnica</dt><dd id="tk-tec"></dd>
-              <dt>Elaboración</dt><dd>5 a 7 días hábiles <span class="ex">(ejemplo)</span></dd>
+              <dt>Elaboración</dt><dd>5 a 7 días hábiles</dd>
             </dl>
             <div class="tk-sum" id="tk-sum"></div>
             <div class="tk-total"><span class="caps">Total</span><strong id="tk-total">Bs 0</strong></div>
             <button class="btn btn-ink" type="submit" id="add">Agregar al pedido</button>
-            <p class="tk-note">Precios de ejemplo. Los reales salen de cotizar prenda, estampado, empaque y margen con el taller.</p>
+            
           </div>
         </form>
       </div>
@@ -1491,7 +1492,7 @@ td:first-child{font-weight:600}
             <p>Cierre regulable atrás. Se ajusta a un contorno de cabeza de <span class="num">54 a 60 cm</span>.</p>
             <p class="hint">Medí con una cinta métrica alrededor de la frente, un dedo por encima de las orejas.</p>
           </div>
-          <p class="hint" style="margin-top:14px">Medidas de ejemplo hasta confirmarlas con el proveedor de prendas.</p>
+          <p class="hint" style="margin-top:14px">Medidas aproximadas. Ante la duda, escribinos por WhatsApp antes de pagar.</p>
         </div>
         <figure class="measure">
           <svg viewBox="0 0 400 440" role="img" aria-label="Polera con las medidas de ancho y largo marcadas">
@@ -1545,14 +1546,14 @@ td:first-child{font-weight:600}
             <div class="phone"><svg viewBox="0 0 24 24"><use href="#i-bank"/></svg>App del banco</div>
             <div class="phone"><svg viewBox="0 0 24 24"><use href="#i-image"/></svg>Elegí la imagen</div>
           </div>
-          <button class="btn btn-ink" type="button" data-qr-demo style="margin-top:20px">Ver el QR de ejemplo</button>
+          
         </div>
       </div>
     </section>
     <section class="wrap">
       <div class="facts">
-        <div><h3>Elaboración</h3><p>5 a 7 días hábiles desde que confirmamos tu pago. Plazo de ejemplo.</p></div>
-        <div><h3>Entregas</h3><p>Recojo sin costo en el taller. Delivery en la ciudad desde Bs 15, precio de ejemplo.</p></div>
+        <div><h3>Elaboración</h3><p>5 a 7 días hábiles desde que confirmamos tu pago. </p></div>
+        <div><h3>Entregas</h3><p>Recojo sin costo en el taller. Delivery en la ciudad desde Bs 15.</p></div>
         <div><h3>Cuidado del estampado</h3><p>Lavá la prenda al revés con agua fría y no planches encima del diseño.</p></div>
       </div>
     </section>
@@ -1578,16 +1579,16 @@ td:first-child{font-weight:600}
       <div class="contacto">
         <dl class="cinfo">
           <div><dt>WhatsApp</dt><dd>Gabriela, Asesora de Ventas<br><a class="num" href="https://wa.me/59164949259" target="_blank" rel="noopener">+591 6494 9259</a></dd></div>
-          <div><dt>Instagram y TikTok</dt><dd>@brava <span class="ex">(cuentas por crear)</span></dd></div>
+          <div><dt>Instagram y TikTok</dt><dd>Próximamente</dd></div>
           <div><dt>Taller</dt><dd>Cochabamba, lunes a sábado</dd></div>
         </dl>
         <form class="form" id="cform" novalidate>
-          <div class="field"><label for="c-nombre">Nombre</label><input id="c-nombre" type="text" autocomplete="name" placeholder="Por ejemplo, Daniela Quiroga"><span class="err" id="c-nombre-err" hidden></span></div>
+          <div class="field"><label for="c-nombre">Nombre</label><input id="c-nombre" type="text" autocomplete="name" placeholder="Por ejemplo, Pepito el Grillo"><span class="err" id="c-nombre-err" hidden></span></div>
           <div class="field"><label for="c-msg">Qué necesitás</label><textarea id="c-msg" placeholder="Por ejemplo, poleras para la promo del curso con el escudo del colegio"></textarea><span class="err" id="c-msg-err" hidden></span></div>
           <div class="field"><label for="c-cant">Cantidad aproximada</label><input id="c-cant" type="text" inputmode="numeric" placeholder="Por ejemplo, 25"></div>
           <button class="btn btn-ink" type="submit" style="justify-self:start"><svg class="ico" aria-hidden="true"><use href="#i-chat"/></svg>Escribir por WhatsApp</button>
           <div id="c-out" hidden>
-            <p class="hint" style="margin-bottom:8px">Este es el mensaje que se abriría en WhatsApp. En el prototipo no se envía nada.</p>
+            <p class="hint" style="margin-bottom:8px">Si WhatsApp no se abrió, copiá este mensaje y envialo a +591 6494 9259.</p>
             <pre class="preview" id="c-msg-out"></pre>
           </div>
         </form>
@@ -1614,10 +1615,10 @@ td:first-child{font-weight:600}
       <div class="foot-grid">
         <div><h4>Tienda</h4><ul><li><a href="#personaliza">Personalizá tu prenda</a></li><li><a href="#departamentos">Departamentos</a></li><li><a href="#poleras">Poleras</a></li><li><a href="#guia-de-tallas">Guía de tallas</a></li></ul></div>
         <div><h4>Ayuda</h4><ul><li><a href="#como-comprar">Cómo comprar</a></li><li><a href="#contacto">Contacto</a></li><li><a href="#pedido">Tu pedido</a></li></ul></div>
-        <div><h4>Taller</h4><ul><li>Gabriela, Asesora de Ventas</li><li><a class="num" href="https://wa.me/59164949259" target="_blank" rel="noopener">+591 6494 9259</a></li><li>@brava <span>(por crear)</span></li><li>Hecho en Cochabamba</li></ul></div>
+        <div><h4>Taller</h4><ul><li>Gabriela, Asesora de Ventas</li><li><a class="num" href="https://wa.me/59164949259" target="_blank" rel="noopener">+591 6494 9259</a></li><li>Hecho en Cochabamba</li></ul></div>
       </div>
       <div class="bigmark" aria-hidden="true">BRAVA</div>
-      <div class="legal"><span>BRAVA, ropa urbana personalizable</span><span>Prototipo académico. Precios, plazos y contactos de ejemplo.</span></div>
+      <div class="legal"><span>BRAVA, ropa urbana personalizable</span><span>Hecho en Cochabamba, Bolivia</span></div>
     </div>
   </footer>
 </main>
@@ -2002,7 +2003,8 @@ td:first-child{font-weight:600}
   };
 
   /* ---------- Catálogo (precios de ejemplo, ver ARQUITECTURA.md Â§7) ---------- */
-  const CONFIG={whatsapp:'591XXXXXXXX',delivery:15,zonas:['Centro','Cala Cala','Queru Queru','Sarco','Tupuraya','Muyurina','Recoleta','Otra zona de la ciudad']};
+  const needPay=()=>!!CONFIG.qr&&!P.pagado; /* sin imagen de QR no se exige «ya pagué»: el QR se pasa por WhatsApp */
+  const CONFIG={whatsapp:'59164949259',qr:'',delivery:15,zonas:['Centro','Cala Cala','Queru Queru','Sarco','Tupuraya','Muyurina','Recoleta','Otra zona de la ciudad']};
   const COL={
     blanco:{n:'Blanco',hex:'#F4F2EC',dark:false},
     negro:{n:'Negro',hex:'#17171A',dark:true},
@@ -2079,7 +2081,7 @@ td:first-child{font-weight:600}
   let cart=Array.isArray(saved.cart)?saved.cart.filter(validItem):[];
   let P=Object.assign({step:1,nombre:'',cel:'',entrega:'recojo',zona:'',ref:'',pagado:false,code:null},saved.P&&typeof saved.P==='object'?saved.P:{});
   P.step=[1,2,3,4].includes(P.step)?P.step:1;
-  if(P.step===4&&!P.pagado) P.step=3;
+  if(P.step===4&&needPay()) P.step=3;
   if(!['recojo','delivery'].includes(P.entrega)) P.entrega='recojo';
   let lastOrder=saved.lastOrder&&typeof saved.lastOrder==='object'?saved.lastOrder:null;
   const persist=()=>store.set('brava-pedido-v2',{cart,P,lastOrder});
@@ -2135,11 +2137,11 @@ td:first-child{font-weight:600}
   }
   function go(id,opts){
     id=id||'inicio';
-    if(id==='planos'){ show('planos'); window.scrollTo(0,0); return; }
+    if(id==='planos'){ go('inicio'); return; }
     if(id==='maqueta'){ show('maqueta'); route(current); window.scrollTo(0,0); enter(); return; }
     if(ROUTES.includes(id)||id.startsWith('departamento-')){ route(id); show('maqueta'); if(!(opts&&opts.keepScroll)) window.scrollTo(0,0); enter(); return; }
     const el=document.getElementById(id);
-    if(el&&views.planos.contains(el)){ show('planos'); requestAnimationFrame(()=>el.scrollIntoView({block:'start'})); return; }
+    if(el&&views.planos.contains(el)){ go('inicio'); return; }
     route('inicio'); show('maqueta'); enter();
   }
   $$('.tab').forEach(t=>t.addEventListener('click',()=>{ go(t.dataset.view); try{history.replaceState(null,'','#'+t.dataset.view);}catch(e){} }));
@@ -2383,6 +2385,7 @@ td:first-child{font-weight:600}
   }
   function itemLine(it){ return `${PRENDAS[it.prenda].n} ${COL[it.color].n.toLowerCase()}, talla ${it.talla}`; }
   function itemDetail(it){return `${it.prenda==='canguro'?'Departamento':'Diseño'}: ${disenoNombre(it)}, ${UB[it.ub].n.toLowerCase()}${it.prenda==='polera'?' + BRAVA al frente':''}, ${it.tintas===1?'1 tinta':'2 tintas'}`;}
+  const waUrl=t=>`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(t)}`;
   function buildMessage(){
     const lines=cart.map((it,k)=>{
       const badge=it.prenda==='gorra'?`Texto «${gorraTxt(it)}»`:it.prenda==='polera'?(it.ub==='pecho'?'Solo «BRAVA» al frente':`Lámina «${pdSel(it.pd).n}»`):(it.ub==='pecho'?`Nombre «${depById(it.dep).n.toUpperCase()}»`:'Cuadrado de dibujos');
@@ -2391,7 +2394,7 @@ td:first-child{font-weight:600}
       return s;
     });
     const ent=P.entrega==='delivery'?`Delivery · Zona ${P.zona||'(sin zona)'}${P.ref?' · Ref.: '+P.ref:''} · ${BS(CONFIG.delivery)}`:'Recojo en el taller · Bs 0';
-    return `Hola BRAVA, quiero confirmar mi pedido ${P.code}.\n\n${lines.join('\n\n')}\n\nSubtotal: ${BS(subtotal())}\nEntrega: ${ent}\nTOTAL PAGADO: ${BS(total())} por QR\n\nNombre: ${P.nombre}\nCelular: ${P.cel}\n\nAdjunto el comprobante de pago.`;
+    return `Hola BRAVA, quiero confirmar mi pedido ${P.code}.\n\n${lines.join('\n\n')}\n\nSubtotal: ${BS(subtotal())}\nEntrega: ${ent}\n${CONFIG.qr?'TOTAL PAGADO':'TOTAL A PAGAR'}: ${BS(total())}${CONFIG.qr?' por QR':' (pasanos el QR de pago por este chat)'}\n\nNombre: ${P.nombre}\nCelular: ${P.cel}${CONFIG.qr?'\n\nAdjunto el comprobante de pago.':''}`;
   }
 
   /* ---------- Pedido: panel lateral y botón flotante ---------- */
@@ -2455,12 +2458,12 @@ td:first-child{font-weight:600}
     } else if(P.step===2){
       body=`<h2 class="panel-h">Datos y entrega</h2><p class="panel-p">Los usamos solo para coordinar tu pedido por WhatsApp.</p>
         <form class="form" id="f-datos" novalidate>
-          <div class="field"><label for="p-nombre">Nombre</label><input id="p-nombre" type="text" autocomplete="name" value="${esc(P.nombre)}" placeholder="Por ejemplo, Daniela Quiroga"><span class="err" id="p-nombre-err" hidden></span></div>
+          <div class="field"><label for="p-nombre">Nombre</label><input id="p-nombre" type="text" autocomplete="name" value="${esc(P.nombre)}" placeholder="Por ejemplo, Pepito el Grillo"><span class="err" id="p-nombre-err" hidden></span></div>
           <div class="field"><label for="p-cel">Celular</label><input id="p-cel" type="tel" inputmode="numeric" autocomplete="tel-national" value="${esc(P.cel)}" placeholder="Por ejemplo, 70012345"><span class="err" id="p-cel-err" hidden></span></div>
           <fieldset style="border:0;padding:0;margin:0"><legend style="font-weight:700;font-size:14px;margin-bottom:8px;padding:0">Entrega</legend>
             <div class="radios">
               ${radio('entrega','recojo','<span>Recojo en el taller</span><span class="num">Bs 0</span>','',P.entrega==='recojo')}
-              ${radio('entrega','delivery','<span>Delivery en Cochabamba</span><span class="num">'+BS(CONFIG.delivery)+' <span class="ex">(ejemplo)</span></span>','',P.entrega==='delivery')}
+              ${radio('entrega','delivery','<span>Delivery en Cochabamba</span><span class="num">'+BS(CONFIG.delivery)+'</span>','',P.entrega==='delivery')}
             </div>
           </fieldset>
           ${P.entrega==='delivery'?`<div class="field"><label for="p-zona">Zona</label><select id="p-zona"><option value="">Elegí tu zona</option>${CONFIG.zonas.map(z=>`<option${P.zona===z?' selected':''}>${z}</option>`).join('')}</select><span class="err" id="p-zona-err" hidden></span></div>
@@ -2477,26 +2480,25 @@ td:first-child{font-weight:600}
             <div class="codebox"><span>Código del pedido. Escribilo en la glosa o referencia de la transferencia.</span><strong>${P.code}</strong><button class="link" type="button" data-copy="${P.code}" data-copy-label="Código copiado" style="justify-self:start">Copiar código</button></div>
           </div>
           <div>
-            <div class="qrcard">${qrSVG(P.code)}<p>QR de ejemplo, no sirve para pagar.<br>Titular: por definir. Banco: por definir.</p>
-              <button class="btn btn-ink btn-sm" type="button" id="save-qr">${ico('download')}Guardar QR</button></div>
-            <div class="howpay">
+            <div class="qrcard">${CONFIG.qr?`<img src="${CONFIG.qr}" alt="Código QR para pagar ${BS(total())}" style="width:100%;height:auto"><button class="btn btn-ink btn-sm" type="button" id="save-qr">${ico('download')}Guardar QR</button>`:`<p>El QR de pago te lo pasamos por WhatsApp en el último paso, junto con la confirmación de tu pedido.</p>`}</div>
+            ${CONFIG.qr?`<div class="howpay">
               <div class="seg" role="group" aria-label="Desde dónde pagás"><button type="button" data-dev="cel" aria-pressed="${pointer}">En el celular</button><button type="button" data-dev="pc" aria-pressed="${!pointer}">En la compu</button></div>
               <ol id="howpay-cel"${pointer?'':' hidden'}><li>Tocá «Guardar QR».</li><li>Abrí la app de tu banco y entrá a Pagar con QR.</li><li>Elegí la imagen desde tu galería.</li><li>Escribí ${BS(total())} y el código ${P.code}.</li></ol>
               <ol id="howpay-pc"${pointer?' hidden':''}><li>Abrí la app de tu banco en el celular.</li><li>Escaneá este QR.</li><li>Escribí ${BS(total())} y el código ${P.code}.</li></ol>
-            </div>
+            </div>`:''}
           </div>
         </div>
-        <label class="check" for="p-pagado"><input type="checkbox" id="p-pagado"${P.pagado?' checked':''}><span>Ya pagué ${BS(total())} con el código ${P.code}</span></label>
+        ${CONFIG.qr?`<label class="check" for="p-pagado"><input type="checkbox" id="p-pagado"${P.pagado?' checked':''}><span>Ya pagué ${BS(total())} con el código ${P.code}</span></label>`:''}
         <p class="hint" id="save-out" hidden style="margin-top:10px"></p>
-        <div class="actions"><button class="btn btn-line" type="button" data-step="2">${ico('back')}Atrás</button><button class="btn btn-ink" type="button" data-step="4" id="to-4"${P.pagado?'':' disabled'}>Continuar${ico('arrow')}</button></div>`;
+        <div class="actions"><button class="btn btn-line" type="button" data-step="2">${ico('back')}Atrás</button><button class="btn btn-ink" type="button" data-step="4" id="to-4"${needPay()?' disabled':''}>Continuar${ico('arrow')}</button></div>`;
     } else {
       body=`<h2 class="panel-h">Enviar por WhatsApp</h2>
-        <div class="notice">${ico('alert')}<span>Antes de enviar, tené a mano la captura del comprobante: la adjuntás en el mismo chat.</span></div>
+        ${CONFIG.qr?`<div class="notice">${ico('alert')}<span>Antes de enviar, tené a mano la captura del comprobante: la adjuntás en el mismo chat.</span></div>`:''}
         <p class="panel-p">Este mensaje sale escrito con todo tu pedido. No hace falta cambiar nada.</p>
         <pre class="preview" id="wa-msg">${esc(buildMessage())}</pre>
         <div class="actions"><button class="btn btn-line" type="button" data-step="3">${ico('back')}Atrás</button>
           <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-line" type="button" data-copy-msg>${ico('copy')}Copiar mensaje</button><button class="btn btn-ink" type="button" id="send-wa">${ico('chat')}Enviar pedido por WhatsApp</button></div></div>
-        <p class="hint" style="margin-top:12px">En el prototipo no se abre WhatsApp porque el número es de ejemplo. En la web real, el botón abre el chat del taller con este texto.</p>
+        <p class="hint" style="margin-top:12px">El botón abre el chat del taller con este mensaje ya escrito. Si no se abre, copialo y envialo a +591 6494 9259.</p>
         <p class="hint" id="copy-out" hidden></p>`;
     }
     root.innerHTML=`<div class="pedido"><div>${stepper}${body}</div>${summaryHTML()}</div>`;
@@ -2560,7 +2562,7 @@ td:first-child{font-weight:600}
   pr.addEventListener('click',e=>{
     if(itemTools(e)) return;
     const st=e.target.closest('[data-step]');
-    if(st){ const n=Number(st.dataset.step); if(n===4&&!P.pagado) return; P.step=n; persist(); renderPedido(); window.scrollTo(0,0); return; }
+    if(st){ const n=Number(st.dataset.step); if(n===4&&needPay()) return; P.step=n; persist(); renderPedido(); window.scrollTo(0,0); return; }
     const dv=e.target.closest('[data-dev]');
     if(dv){ $$('[data-dev]').forEach(b=>b.setAttribute('aria-pressed',String(b===dv))); $('#howpay-cel').hidden=dv.dataset.dev!=='cel'; $('#howpay-pc').hidden=dv.dataset.dev!=='pc'; return; }
     const cp=e.target.closest('[data-copy]');
@@ -2574,6 +2576,7 @@ td:first-child{font-weight:600}
       lastOrder={code:P.code,msg:buildMessage(),total:total(),n:count()};
       cart=[]; P={step:1,nombre:P.nombre,cel:P.cel,entrega:P.entrega,zona:P.zona,ref:P.ref,pagado:false,code:null};
       persist(); renderCart(); go('enviado');
+      window.open(waUrl(lastOrder.msg),'_blank','noopener');
     }
   });
   /* Copiar: clipboard moderno; si el navegador lo niega (WhatsApp, Instagram, http), respaldo con execCommand; si tampoco, deja el texto seleccionado */
@@ -2597,29 +2600,12 @@ td:first-child{font-weight:600}
     else viaLegacy();
   }
 
-  /* QR de ejemplo: patrón al azar con las tres esquinas de un QR, no codifica nada */
-  function qrSVG(seed){
-    const N=29; let h=0; for(const c of String(seed)) h=(h*31+c.charCodeAt(0))>>>0;
-    const rnd=()=>{ h=(h*1664525+1013904223)>>>0; return h/4294967296; };
-    const finder=(x,y)=>x<8&&y<8||x>N-9&&y<8||x<8&&y>N-9;
-    let d='';
-    for(let y=0;y<N;y++) for(let x=0;x<N;x++){
-      if(finder(x,y)) continue;
-      if(x>10&&x<18&&y>12&&y<16) continue;
-      if(rnd()>.52) d+=`M${x} ${y}h1v1h-1z`;
-    }
-    const f=(x,y)=>`<rect x="${x}" y="${y}" width="7" height="7" fill="#1A1917"/><rect x="${x+1}" y="${y+1}" width="5" height="5" fill="#FBFAF7"/><rect x="${x+2}" y="${y+2}" width="3" height="3" fill="#1A1917"/>`;
-    return `<svg viewBox="-2 -2 33 33" role="img" aria-label="Código QR de ejemplo"><rect x="-2" y="-2" width="33" height="33" fill="#FBFAF7"/><path d="${d}" fill="#1A1917"/>${f(0,0)}${f(N-7,0)}${f(0,N-7)}<rect x="10.5" y="12.5" width="8" height="4" rx=".6" fill="#FBFAF7" stroke="#1A1917" stroke-width=".25"/><text x="14.5" y="15.3" text-anchor="middle" font-size="2" font-family="Archivo, sans-serif" font-weight="800" fill="#1A1917">EJEMPLO</text></svg>`;
-  }
   function saveQR(){
     const out=$('#save-out'); out.hidden=false;
     try{
-      const svg=qrSVG(P.code).replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" ');
-      const url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
-      const a=document.createElement('a'); a.href=url; a.download=`qr-brava-${P.code}.svg`; document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(()=>URL.revokeObjectURL(url),2000);
-      out.textContent='Si el archivo no se descargó, es por el visor del prototipo. En la web real, la imagen queda en tu galería.';
-    }catch(e){ out.textContent='En la web real, este botón guarda la imagen del QR en tu galería.'; }
+      const a=document.createElement('a'); a.href=CONFIG.qr; a.download='qr-brava'+CONFIG.qr.slice(CONFIG.qr.lastIndexOf('.')); document.body.appendChild(a); a.click(); a.remove();
+      out.textContent='Listo. Si no ves el archivo, revisá la carpeta de descargas o tu galería.';
+    }catch(e){ out.textContent='No se pudo guardar. Hacé una captura de pantalla del QR.'; }
   }
 
   /* ---------- Confirmación ---------- */
@@ -2628,7 +2614,7 @@ td:first-child{font-weight:600}
     const code=o?o.code:'BR-2310-K7Q';
     $('#enviado-root').innerHTML=`
       <header class="done-h"><h1>Pedido enviado</h1><p class="code">${code}</p>
-        <p style="font-size:18px;color:var(--ink-2);max-width:54ch">${o?`Recibimos ${o.n} ${o.n===1?'prenda':'prendas'} por ${BS(o.total)}. Guardá este código: es el que vas a nombrar si nos escribís.`:'Vista de ejemplo: así se ve la confirmación después de enviar un pedido.'}</p></header>
+        <p style="font-size:18px;color:var(--ink-2);max-width:54ch">${o?`Recibimos ${o.n} ${o.n===1?'prenda':'prendas'} por ${BS(o.total)}. Guardá este código: es el que vas a nombrar si nos escribís.`:'Cuando envíes un pedido, acá vas a ver su código.'}</p></header>
       <ol class="next">
         <li><b>Revisamos tu comprobante</b><span>Lo comparamos con el total y el código del pedido.</span></li>
         <li><b>Te confirmamos la fecha</b><span>Por WhatsApp, con el día en que va a estar listo.</span></li>
@@ -2637,7 +2623,7 @@ td:first-child{font-weight:600}
       <div style="display:flex;gap:12px;flex-wrap:wrap"><button class="btn btn-line" type="button" id="reopen-wa">${ico('chat')}Volver a abrir WhatsApp</button><button class="btn btn-ink" type="button" data-go="personaliza">Armar otro pedido</button></div>
       ${o?`<details class="sent"><summary>Ver el mensaje enviado</summary><pre class="preview">${esc(o.msg)}</pre></details>`:'<div style="height:80px"></div>'}`;
   }
-  document.addEventListener('click',e=>{ if(e.target.closest('#reopen-wa')) toast('En la web real, esto vuelve a abrir el chat con el mensaje.'); });
+  document.addEventListener('click',e=>{ if(e.target.closest('#reopen-wa')&&lastOrder) window.open(waUrl(lastOrder.msg),'_blank','noopener'); });
 
   /* ---------- Guía de tallas: pestañas ---------- */
   $$('[data-tp]').forEach(b=>b.addEventListener('click',()=>{
@@ -2653,6 +2639,7 @@ td:first-child{font-weight:600}
     if(!n){ $('#c-nombre').focus(); return; } if(!m){ $('#c-msg').focus(); return; }
     $('#c-msg-out').textContent=`Hola BRAVA, soy ${n}. Quiero cotizar un pedido especial:\n${m}${c?`\nCantidad aproximada: ${c}`:''}`;
     $('#c-out').hidden=false;
+    window.open(waUrl($('#c-msg-out').textContent),'_blank','noopener');
   });
 
   /* ---------- Pedido de ejemplo para presentar los planos ---------- */
@@ -2660,7 +2647,7 @@ td:first-child{font-weight:600}
     if(!e.target.closest('[data-demo]')) return;
     cart=[{prenda:'canguro',color:'pacay',talla:'M',dep:'cochabamba',ub:'espalda',tintas:2,acc:'ocre',qty:1},
           {prenda:'gorra',color:'negro',talla:'Única',dep:'tarija',ub:'frente',tintas:1,acc:'ocre',qty:1}];
-    P={step:3,nombre:'Daniela Quiroga',cel:'70012345',entrega:'delivery',zona:'Queru Queru',ref:'Calle Pantaleón Dalence, portón verde',pagado:false,code:null};
+    P={step:3,nombre:'Pepito el Grillo',cel:'70012345',entrega:'delivery',zona:'Queru Queru',ref:'Calle Pantaleón Dalence, portón verde',pagado:false,code:null};
     persist(); renderCart(); go('pedido');
   });
 
