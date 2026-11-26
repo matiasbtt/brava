@@ -26,8 +26,9 @@ begin
  nm:=btrim(p->>'nombre'); tel:=regexp_replace(coalesce(p->>'telefono',''),'[^0-9]','','g'); cod:=nullif(btrim(p->>'codigo'),'');
  if nm is null or char_length(nm) not between 2 and 80 then raise exception 'Nombre debe tener entre 2 y 80 caracteres'; end if;
  if tel !~ '^[67][0-9]{7}$' then raise exception 'Teléfono debe tener 8 dígitos y empezar en 6 o 7'; end if;
- perform pg_advisory_xact_lock(hashtext(tel));
  if cod is null then raise exception 'Falta el código del pedido'; end if;
+ perform pg_advisory_xact_lock(hashtext(cod));
+ perform pg_advisory_xact_lock(hashtext(tel));
  select id into pid from pedido where codigo=cod; if pid is not null then select jsonb_build_object('codigo',codigo,'total',total,'etapa',etapa) into p from pedido where id=pid; return p; end if;
  if (select count(*) from pedido where cliente_id in (select id from cliente where telefono=tel) and fecha>now()-interval '60 minutes')>=5 then raise exception 'Límite de 5 pedidos por teléfono cada 60 minutos'; end if;
  if jsonb_typeof(p->'items') is distinct from 'array' or coalesce(jsonb_array_length(p->'items'),0) not between 1 and 20 then raise exception 'El pedido debe tener entre 1 y 20 ítems'; end if;
@@ -45,8 +46,10 @@ begin
   subtotal:=subtotal+unit*(it->>'cantidad')::integer;
  end loop;
  select monto into delivery_fee from catalogo_recargo where clave='delivery'; if delivery_fee is null then raise exception 'Falta el recargo de delivery en catalogo_recargo'; end if;
- total_calc:=subtotal+case when p->>'entrega'='delivery' then delivery_fee else 0 end; ep:=case when coalesce((p->>'pagado')::boolean,false) then 'pago_verificar'::etapa_pedido else 'consulta'::etapa_pedido end;
- insert into pedido(codigo,cliente_id,etapa,entrega,zona,referencia,costo_delivery,total,pagado,fecha_pago,canal) values(cod,cli,ep,case when p->>'entrega'='delivery' then 'delivery' else 'recojo' end,p->>'zona',p->>'referencia',case when p->>'entrega'='delivery' then delivery_fee else 0 end,total_calc,coalesce((p->>'pagado')::boolean,false),case when coalesce((p->>'pagado')::boolean,false) then now() end,p->>'canal') returning id into pid;
+ total_calc:=subtotal+case when p->>'entrega'='delivery' then delivery_fee else 0 end;
+ -- El navegador solo puede declarar que el cliente reportó el pago. El equipo debe validar y marcarlo como pagado.
+ ep:=case when coalesce((p->>'pagado')::boolean,false) then 'pago_verificar'::etapa_pedido else 'consulta'::etapa_pedido end;
+ insert into pedido(codigo,cliente_id,etapa,entrega,zona,referencia,costo_delivery,total,pagado,fecha_pago,canal) values(cod,cli,ep,case when p->>'entrega'='delivery' then 'delivery' else 'recojo' end,p->>'zona',p->>'referencia',case when p->>'entrega'='delivery' then delivery_fee else 0 end,total_calc,false,null,p->>'canal') returning id into pid;
  for it in select value from jsonb_array_elements(p->'items') loop
   select c.base into base from catalogo_prenda c where c.prenda=it->>'prenda'; select monto into rec from catalogo_recargo where clave=it->>'ubicacion';
   unit:=base+rec+case when (it->>'tintas')::integer=2 then 10 else 0 end;

@@ -1993,7 +1993,7 @@ td:first-child{font-weight:600}
 
 <button class="fab" type="button" id="fab" data-open-cart hidden>Pedido <span class="num" id="fab-n">0</span> <span class="num" id="fab-t">Bs 0</span></button>
 
-<script src="brava-config.js?v=20261027"></script><script src="registro.js?v=20261027"></script>
+<script src="brava-config.js?v=20261027"></script><script src="registro.js?v=20261113"></script>
 <script>
 (function(){
   const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -2380,7 +2380,9 @@ td:first-child{font-weight:600}
   const total=()=>cart.length?subtotal()+deliveryCost():0;
   function newCode(){
     const d=new Date(), dd=String(d.getDate()).padStart(2,'0')+String(d.getMonth()+1).padStart(2,'0');
-    const A='ACDEFGHJKMNPQRTUVWXY3479'; let r=''; for(let i=0;i<3;i++) r+=A[Math.floor(Math.random()*A.length)];
+    const A='ACDEFGHJKMNPQRTUVWXY3479'; let r='';
+    if(window.crypto&&crypto.getRandomValues){const bytes=new Uint8Array(8);crypto.getRandomValues(bytes);for(const b of bytes)r+=A[b%A.length];}
+    else for(let i=0;i<8;i++) r+=A[Math.floor(Math.random()*A.length)];
     return `BR-${dd}-${r}`;
   }
   function itemLine(it){ return `${PRENDAS[it.prenda].n} ${COL[it.color].n.toLowerCase()}, talla ${it.talla}`; }
@@ -2559,24 +2561,38 @@ td:first-child{font-weight:600}
     e.preventDefault();
     if(validateDatos()){ P.step=3; persist(); renderPedido(); window.scrollTo(0,0); }
   });
-  pr.addEventListener('click',e=>{
+  pr.addEventListener('click',async e=>{
     if(itemTools(e)) return;
     const st=e.target.closest('[data-step]');
-    if(st){ const n=Number(st.dataset.step); if(n===4&&needPay()) return; P.step=n; persist(); renderPedido(); window.scrollTo(0,0); return; }
+    if(st){ const n=Number(st.dataset.step); if(!Number.isInteger(n)||n<1||n>4||(n===4&&needPay())) return; P.step=n; persist(); renderPedido(); window.scrollTo(0,0); return; }
     const dv=e.target.closest('[data-dev]');
     if(dv){ $$('[data-dev]').forEach(b=>b.setAttribute('aria-pressed',String(b===dv))); $('#howpay-cel').hidden=dv.dataset.dev!=='cel'; $('#howpay-pc').hidden=dv.dataset.dev!=='pc'; return; }
     const cp=e.target.closest('[data-copy]');
     if(cp){ copyText(cp.dataset.copy,()=>toast(cp.dataset.copyLabel),(cp.closest('.codebox,.amount')||document).querySelector('strong')); return; }
     if(e.target.closest('[data-copy-msg]')){ copyText($('#wa-msg').textContent,()=>toast('Mensaje copiado'),$('#wa-msg')); return; }
     if(e.target.closest('#save-qr')){ saveQR(); return; }
-    if(e.target.closest('#send-wa')){
+    const sendButton=e.target.closest('#send-wa');
+    if(sendButton){
+      if(sendButton.disabled) return;
+      sendButton.disabled=true;
+      const wa=window.open('about:blank','_blank'); if(wa) wa.opener=null;
       const params=new URLSearchParams(location.search),src=[params.get('utm_source'),document.referrer].filter(Boolean).join(' ').toLowerCase();
       const canal=src.includes('instagram')?'Instagram':src.includes('tiktok')?'TikTok':src.includes('whatsapp')?'WhatsApp referido':'Web directa';
-      if(typeof window.registrarPedido==='function') window.registrarPedido({codigo:P.code,nombre:P.nombre,telefono:String(P.cel||'').replace(/^\+?591\s*/, '').replace(/\D/g,''),entrega:P.entrega,zona:P.zona,referencia:P.ref,pagado:!!P.pagado,canal,items:cart.map(it=>({prenda:it.prenda,color:it.color,talla:it.talla==='Única'?'U':it.talla,diseno:it.prenda==='gorra'?gorraTxt(it):it.prenda==='polera'?(it.ub==='pecho'?'BRAVA':pdSel(it.pd).n):depById(it.dep).n,departamento:it.prenda==='canguro'?it.dep:null,ubicacion:it.ub,tintas:it.tintas,cantidad:it.qty}))});
+      try{
+        if(typeof window.registrarPedido!=='function') throw new Error('No se pudo iniciar el registro del pedido. Recargá la página e intentá de nuevo.');
+        await window.registrarPedido({codigo:P.code,nombre:P.nombre,telefono:String(P.cel||'').replace(/^\+?591\s*/, '').replace(/\D/g,''),entrega:P.entrega,zona:P.zona,referencia:P.ref,pagado:!!P.pagado,canal,items:cart.map(it=>({prenda:it.prenda,color:it.color,talla:it.talla==='Única'?'U':it.talla,diseno:it.prenda==='gorra'?gorraTxt(it):it.prenda==='polera'?(it.ub==='pecho'?'BRAVA':pdSel(it.pd).n):depById(it.dep).n,departamento:it.prenda==='canguro'?it.dep:null,ubicacion:it.ub,tintas:it.tintas,cantidad:it.qty}))});
+      }catch(error){
+        console.error('BRAVA: no se pudo registrar el pedido.',error);
+        if(wa) wa.close();
+        sendButton.disabled=false;
+        const hint=pr.querySelector('#copy-out');
+        if(hint){hint.hidden=false;hint.textContent='No pudimos registrar tu pedido. Sigue guardado en esta página: revisá la conexión e intentá de nuevo, o copiá el mensaje y envialo a +591 6494 9259.';}
+        return;
+      }
       lastOrder={code:P.code,msg:buildMessage(),total:total(),n:count()};
       cart=[]; P={step:1,nombre:P.nombre,cel:P.cel,entrega:P.entrega,zona:P.zona,ref:P.ref,pagado:false,code:null};
       persist(); renderCart(); go('enviado');
-      window.open(waUrl(lastOrder.msg),'_blank','noopener');
+      if(wa) wa.location.replace(waUrl(lastOrder.msg));
     }
   });
   /* Copiar: clipboard moderno; si el navegador lo niega (WhatsApp, Instagram, http), respaldo con execCommand; si tampoco, deja el texto seleccionado */
